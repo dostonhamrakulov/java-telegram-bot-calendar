@@ -8,17 +8,23 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalendarGenerator {
-    public static InlineKeyboardMarkup buildCalendar() {
+public class InlineCalendarBuilder {
+
+    private String[] weekDays;
+
+    public InlineCalendarBuilder() {
+        this.weekDays = new String[]{"D", "S", "CH", "P", "J", "SH", "Y"};
+    }
+
+    public InlineKeyboardMarkup build() {
         final InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         final List<List<InlineKeyboardButton>> rows = new ArrayList<>();
 
         List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
 
-        int daysOfCurrentMonth = YearMonth.now().lengthOfMonth();
-        String[] weekDays = new String[]{"D", "S", "CH", "P", "J", "SH", "Y"};
 
-        for (String weekDay: weekDays) {
+
+        for (String weekDay: this.weekDays) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
             in.setText(weekDay);
             in.setCallbackData(weekDay);
@@ -39,6 +45,8 @@ public class CalendarGenerator {
             in.setCallbackData(" ");
             inlineKeyboardButtons.add(in);
         }
+
+        int daysOfCurrentMonth = YearMonth.now().lengthOfMonth();
 
         for (int i = 1; i <= daysOfCurrentMonth; i++) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
@@ -75,5 +83,13 @@ public class CalendarGenerator {
         inlineKeyboardMarkup.setKeyboard(rows);
 
         return inlineKeyboardMarkup;
+    }
+
+    public String[] getWeekDays() {
+        return weekDays;
+    }
+
+    public void setWeekDays(String[] weekDays) {
+        this.weekDays = weekDays;
     }
 }
