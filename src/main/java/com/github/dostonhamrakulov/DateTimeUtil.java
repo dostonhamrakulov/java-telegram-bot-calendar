@@ -1,4 +1,4 @@
-package uz.dosha.web;
+package com.github.dostonhamrakulov;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

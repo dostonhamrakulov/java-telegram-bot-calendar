@@ -1,4 +1,4 @@
-package uz.dosha.web;
+package com.github.dostonhamrakulov;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static uz.dosha.web.InlineCalendarCommandUtil.CALENDAR_COMMAND_DATE;
-import static uz.dosha.web.InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE;
-import static uz.dosha.web.InlineCalendarCommandUtil.CALENDAR_COMMAND_NAVIGATION;
-import static uz.dosha.web.InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX;
+import static com.github.dostonhamrakulov.InlineCalendarCommandUtil.CALENDAR_COMMAND_DATE;
+import static com.github.dostonhamrakulov.InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE;
+import static com.github.dostonhamrakulov.InlineCalendarCommandUtil.CALENDAR_COMMAND_NAVIGATION;
+import static com.github.dostonhamrakulov.InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX;
 
 /**
  * Inline calendar builder
