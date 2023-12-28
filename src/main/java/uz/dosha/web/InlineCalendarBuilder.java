@@ -5,9 +5,12 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static uz.dosha.web.InlineCalendarCommandUtil.CALENDAR_COMMAND_DATE;
 import static uz.dosha.web.InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE;
@@ -25,8 +28,27 @@ public class InlineCalendarBuilder {
      */
     private String[] weekDays;
 
+    /**
+     * Translated month names
+     */
+    private Map<Month, String> months;
+
+
     public InlineCalendarBuilder() {
         this.weekDays = new String[]{"D", "S", "CH", "P", "J", "SH", "Y"};
+        this.months = new HashMap<>();
+        this.months.put(Month.JANUARY, "Yanvar");
+        this.months.put(Month.FEBRUARY, "Fevral");
+        this.months.put(Month.MARCH, "Mart");
+        this.months.put(Month.APRIL, "April");
+        this.months.put(Month.MAY, "May");
+        this.months.put(Month.JUNE, "Iyun");
+        this.months.put(Month.JULY, "Iyul");
+        this.months.put(Month.AUGUST, "Avgust");
+        this.months.put(Month.SEPTEMBER, "Sentyabr");
+        this.months.put(Month.OCTOBER, "Oktyabr");
+        this.months.put(Month.NOVEMBER, "Noyabr");
+        this.months.put(Month.DECEMBER, "Dekabr");
     }
 
     public InlineKeyboardMarkup build(final Update update) {
@@ -89,7 +111,7 @@ public class InlineCalendarBuilder {
         inlineKeyboardButtons.add(in);
 
         in = new InlineKeyboardButton();
-        in.setText(dateForCalendar.getMonth().name().substring(0, 3) + ", " + dateForCalendar.getYear());
+        in.setText(this.months.get(dateForCalendar.getMonth()).substring(0, 3) + ", " + dateForCalendar.getYear());
         in.setCallbackData(CALENDAR_COMMAND_PREFIX + dateForCalendar.getMonth().name());
         inlineKeyboardButtons.add(in);
 
@@ -109,5 +131,13 @@ public class InlineCalendarBuilder {
 
     public void setWeekDays(String[] weekDays) {
         this.weekDays = weekDays;
+    }
+
+    public Map<Month, String> getMonths() {
+        return months;
+    }
+
+    public void setMonths(Map<Month, String> months) {
+        this.months = months;
     }
 }
