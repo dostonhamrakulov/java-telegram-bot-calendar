@@ -33,7 +33,6 @@ public class InlineCalendarBuilder {
      */
     private Map<Month, String> months;
 
-
     public InlineCalendarBuilder() {
         this.weekDays = new String[]{"D", "S", "CH", "P", "J", "SH", "Y"};
         this.months = new HashMap<>();
@@ -51,7 +50,7 @@ public class InlineCalendarBuilder {
         this.months.put(Month.DECEMBER, "Dekabr");
     }
 
-    public InlineKeyboardMarkup build(final Update update) {
+    public synchronized InlineKeyboardMarkup build(final Update update) {
 
         LocalDate dateForCalendar = InlineCalendarCommandUtil.extractNavigationDate(update);
 
@@ -65,7 +64,7 @@ public class InlineCalendarBuilder {
         List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
 
         // adding weeks in one row
-        for (String weekDay: this.weekDays) {
+        for (final String weekDay: getWeekDays()) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
             in.setText(weekDay);
             in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_IGNORE);
@@ -86,7 +85,8 @@ public class InlineCalendarBuilder {
             inlineKeyboardButtons.add(in);
         }
 
-        int daysOfCurrentMonth = YearMonth.of(dateForCalendar.getYear(), dateForCalendar.getMonth()).lengthOfMonth();
+        final int daysOfCurrentMonth = YearMonth.of(dateForCalendar.getYear(), dateForCalendar.getMonth()).lengthOfMonth();
+        int remainingEmptyDays = 0;
 
         for (int i = 1; i <= daysOfCurrentMonth; i++) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
@@ -100,7 +100,21 @@ public class InlineCalendarBuilder {
 
                 inlineKeyboardButtons = new ArrayList<>();
                 weekDaysCounter = 0;
+            } else if (i == daysOfCurrentMonth) {
+                remainingEmptyDays = 7 - weekDaysCounter;
             }
+        }
+
+        // adding empty buttons
+        for (int i = 0; i < remainingEmptyDays; i++) {
+            final InlineKeyboardButton in = new InlineKeyboardButton();
+            in.setText(" ");
+            in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_IGNORE);
+            inlineKeyboardButtons.add(in);
+        }
+
+        if (remainingEmptyDays > 0) {
+            rows.add(inlineKeyboardButtons);
         }
 
         inlineKeyboardButtons = new ArrayList<>();
@@ -112,7 +126,7 @@ public class InlineCalendarBuilder {
 
         in = new InlineKeyboardButton();
         in.setText(this.months.get(dateForCalendar.getMonth()).substring(0, 3) + ", " + dateForCalendar.getYear());
-        in.setCallbackData(CALENDAR_COMMAND_PREFIX + dateForCalendar.getMonth().name());
+        in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_IGNORE + dateForCalendar.getMonth().name());
         inlineKeyboardButtons.add(in);
 
         in = new InlineKeyboardButton();
@@ -129,7 +143,7 @@ public class InlineCalendarBuilder {
         return weekDays;
     }
 
-    public void setWeekDays(String[] weekDays) {
+    public void setWeekDays(final String[] weekDays) {
         this.weekDays = weekDays;
     }
 
@@ -137,7 +151,7 @@ public class InlineCalendarBuilder {
         return months;
     }
 
-    public void setMonths(Map<Month, String> months) {
+    public void setMonths(final Map<Month, String> months) {
         this.months = months;
     }
 }
