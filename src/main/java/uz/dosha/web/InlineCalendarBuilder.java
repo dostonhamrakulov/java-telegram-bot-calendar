@@ -1,5 +1,6 @@
 package uz.dosha.web;
 
+import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
@@ -8,6 +9,9 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uz.dosha.web.InlineCalendarCommandUtil.CALENDAR_COMMAND_DATE;
+import static uz.dosha.web.InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE;
+import static uz.dosha.web.InlineCalendarCommandUtil.CALENDAR_COMMAND_NAVIGATION;
 import static uz.dosha.web.InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX;
 
 /**
@@ -25,7 +29,14 @@ public class InlineCalendarBuilder {
         this.weekDays = new String[]{"D", "S", "CH", "P", "J", "SH", "Y"};
     }
 
-    public InlineKeyboardMarkup build() {
+    public InlineKeyboardMarkup build(final Update update) {
+
+        LocalDate dateForCalendar = InlineCalendarCommandUtil.extractNavigationDate(update);
+
+        if (dateForCalendar == null) {
+            dateForCalendar = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
+        }
+
         final InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         final List<List<InlineKeyboardButton>> rows = new ArrayList<>();
 
@@ -35,7 +46,7 @@ public class InlineCalendarBuilder {
         for (String weekDay: this.weekDays) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
             in.setText(weekDay);
-            in.setCallbackData(CALENDAR_COMMAND_PREFIX + weekDay);
+            in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_IGNORE);
             inlineKeyboardButtons.add(in);
         }
 
@@ -43,23 +54,22 @@ public class InlineCalendarBuilder {
 
         inlineKeyboardButtons = new ArrayList<>();
 
-        LocalDate today = LocalDate.now();
-        int weekDaysCounter = LocalDate.of(today.getYear(), today.getMonth(), 1).getDayOfWeek().getValue() - 1;
+        int weekDaysCounter = LocalDate.of(dateForCalendar.getYear(), dateForCalendar.getMonth(), 1).getDayOfWeek().getValue() - 1;
 
         // adding empty buttons
         for (int i = 0; i < weekDaysCounter; i++) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
             in.setText(" ");
-            in.setCallbackData(CALENDAR_COMMAND_PREFIX);
+            in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_IGNORE);
             inlineKeyboardButtons.add(in);
         }
 
-        int daysOfCurrentMonth = YearMonth.now().lengthOfMonth();
+        int daysOfCurrentMonth = YearMonth.of(dateForCalendar.getYear(), dateForCalendar.getMonth()).lengthOfMonth();
 
         for (int i = 1; i <= daysOfCurrentMonth; i++) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
             in.setText("" + i);
-            in.setCallbackData(CALENDAR_COMMAND_PREFIX + i);
+            in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_DATE + DateTimeUtil.convertToString(LocalDate.of(dateForCalendar.getYear(), dateForCalendar.getMonth(), i)));
             inlineKeyboardButtons.add(in);
             weekDaysCounter += 1;
 
@@ -75,17 +85,17 @@ public class InlineCalendarBuilder {
 
         InlineKeyboardButton in = new InlineKeyboardButton();
         in.setText("<<");
-        in.setCallbackData(CALENDAR_COMMAND_PREFIX + "<<");
+        in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_NAVIGATION + DateTimeUtil.convertToString(dateForCalendar.minusMonths(1)));
         inlineKeyboardButtons.add(in);
 
         in = new InlineKeyboardButton();
-        in.setText(today.getMonth().name().substring(0, 3) + ", " + today.getYear());
-        in.setCallbackData(CALENDAR_COMMAND_PREFIX + today.getMonth().name());
+        in.setText(dateForCalendar.getMonth().name().substring(0, 3) + ", " + dateForCalendar.getYear());
+        in.setCallbackData(CALENDAR_COMMAND_PREFIX + dateForCalendar.getMonth().name());
         inlineKeyboardButtons.add(in);
 
         in = new InlineKeyboardButton();
         in.setText(">>");
-        in.setCallbackData(CALENDAR_COMMAND_PREFIX + ">>");
+        in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_NAVIGATION + DateTimeUtil.convertToString(dateForCalendar.plusMonths(1)));
         inlineKeyboardButtons.add(in);
         rows.add(inlineKeyboardButtons);
         inlineKeyboardMarkup.setKeyboard(rows);
