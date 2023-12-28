@@ -33,6 +33,11 @@ public class InlineCalendarBuilder {
      */
     private Map<Month, String> months;
 
+    /**
+     * Flag to show the full month name
+     */
+    private boolean showFullMonthName;
+
     public InlineCalendarBuilder() {
         this.weekDays = new String[]{"D", "S", "CH", "P", "J", "SH", "Y"};
         this.months = new HashMap<>();
@@ -48,6 +53,7 @@ public class InlineCalendarBuilder {
         this.months.put(Month.OCTOBER, "Oktyabr");
         this.months.put(Month.NOVEMBER, "Noyabr");
         this.months.put(Month.DECEMBER, "Dekabr");
+        this.showFullMonthName = false;
     }
 
     public synchronized InlineKeyboardMarkup build(final Update update) {
@@ -125,7 +131,13 @@ public class InlineCalendarBuilder {
         inlineKeyboardButtons.add(in);
 
         in = new InlineKeyboardButton();
-        in.setText(this.months.get(dateForCalendar.getMonth()).substring(0, 3) + ", " + dateForCalendar.getYear());
+
+        if (showFullMonthName) {
+            in.setText(this.months.get(dateForCalendar.getMonth()) + ", " + dateForCalendar.getYear());
+        } else {
+            in.setText(this.months.get(dateForCalendar.getMonth()).substring(0, 3) + ", " + dateForCalendar.getYear());
+        }
+
         in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_IGNORE + dateForCalendar.getMonth().name());
         inlineKeyboardButtons.add(in);
 
@@ -153,5 +165,9 @@ public class InlineCalendarBuilder {
 
     public void setMonths(final Map<Month, String> months) {
         this.months = months;
+    }
+
+    public void setShowFullMonthName(boolean showFullMonthName) {
+        this.showFullMonthName = showFullMonthName;
     }
 }
