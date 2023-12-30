@@ -4,7 +4,7 @@
   <groupId>io.github.dostonhamrakulov</groupId>
   <artifactId>java-telegram-bot-calendar</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>java-telegram-bot-calendar Maven Webapp</name>
   <description>Calendar for Telegram Bot in Java that you can use in your java based telegram bots</description>
   <url>https://dosha.uz/</url>
