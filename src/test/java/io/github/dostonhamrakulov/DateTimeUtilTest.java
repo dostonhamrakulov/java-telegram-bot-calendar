@@ -1,4 +1,4 @@
-package com.github.dostonhamrakulov;
+package io.github.dostonhamrakulov;
 
 import org.junit.jupiter.api.Test;
 

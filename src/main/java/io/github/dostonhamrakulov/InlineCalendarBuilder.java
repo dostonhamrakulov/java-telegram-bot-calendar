@@ -1,4 +1,4 @@
-package com.github.dostonhamrakulov;
+package io.github.dostonhamrakulov;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -11,11 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.github.dostonhamrakulov.InlineCalendarCommandUtil.CALENDAR_COMMAND_DATE;
-import static com.github.dostonhamrakulov.InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE;
-import static com.github.dostonhamrakulov.InlineCalendarCommandUtil.CALENDAR_COMMAND_NAVIGATION;
-import static com.github.dostonhamrakulov.InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX;
 
 /**
  * Inline calendar builder
@@ -73,7 +68,7 @@ public class InlineCalendarBuilder {
         for (final String weekDay: getWeekDays()) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
             in.setText(weekDay);
-            in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_IGNORE);
+            in.setCallbackData(InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX + InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE);
             inlineKeyboardButtons.add(in);
         }
 
@@ -87,7 +82,7 @@ public class InlineCalendarBuilder {
         for (int i = 0; i < weekDaysCounter; i++) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
             in.setText(" ");
-            in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_IGNORE);
+            in.setCallbackData(InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX + InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE);
             inlineKeyboardButtons.add(in);
         }
 
@@ -97,7 +92,7 @@ public class InlineCalendarBuilder {
         for (int i = 1; i <= daysOfCurrentMonth; i++) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
             in.setText("" + i);
-            in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_DATE + DateTimeUtil.convertToString(LocalDate.of(dateForCalendar.getYear(), dateForCalendar.getMonth(), i)));
+            in.setCallbackData(InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX + InlineCalendarCommandUtil.CALENDAR_COMMAND_DATE + DateTimeUtil.convertToString(LocalDate.of(dateForCalendar.getYear(), dateForCalendar.getMonth(), i)));
             inlineKeyboardButtons.add(in);
             weekDaysCounter += 1;
 
@@ -115,7 +110,7 @@ public class InlineCalendarBuilder {
         for (int i = 0; i < remainingEmptyDays; i++) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
             in.setText(" ");
-            in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_IGNORE);
+            in.setCallbackData(InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX + InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE);
             inlineKeyboardButtons.add(in);
         }
 
@@ -127,7 +122,7 @@ public class InlineCalendarBuilder {
 
         InlineKeyboardButton in = new InlineKeyboardButton();
         in.setText("<<");
-        in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_NAVIGATION + DateTimeUtil.convertToString(dateForCalendar.minusMonths(1)));
+        in.setCallbackData(InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX + InlineCalendarCommandUtil.CALENDAR_COMMAND_NAVIGATION + DateTimeUtil.convertToString(dateForCalendar.minusMonths(1)));
         inlineKeyboardButtons.add(in);
 
         in = new InlineKeyboardButton();
@@ -138,12 +133,12 @@ public class InlineCalendarBuilder {
             in.setText(this.months.get(dateForCalendar.getMonth()).substring(0, 3) + ", " + dateForCalendar.getYear());
         }
 
-        in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_IGNORE + dateForCalendar.getMonth().name());
+        in.setCallbackData(InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX + InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE + dateForCalendar.getMonth().name());
         inlineKeyboardButtons.add(in);
 
         in = new InlineKeyboardButton();
         in.setText(">>");
-        in.setCallbackData(CALENDAR_COMMAND_PREFIX + CALENDAR_COMMAND_NAVIGATION + DateTimeUtil.convertToString(dateForCalendar.plusMonths(1)));
+        in.setCallbackData(InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX + InlineCalendarCommandUtil.CALENDAR_COMMAND_NAVIGATION + DateTimeUtil.convertToString(dateForCalendar.plusMonths(1)));
         inlineKeyboardButtons.add(in);
         rows.add(inlineKeyboardButtons);
         inlineKeyboardMarkup.setKeyboard(rows);

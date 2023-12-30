@@ -1,4 +1,4 @@
-package com.github.dostonhamrakulov;
+package io.github.dostonhamrakulov;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
 
