@@ -1,5 +1,45 @@
 # java-telegram-bot-calendar
-Date and time picker and inline calendar for Java telegram bots
+Date and time picker and inline calendar for based Java telegram bots. It is very simple to integrate and use in your bot.
+
+Maven Dependency:
+```xml
+<dependency>
+    <groupId>io.github.dostonhamrakulov</groupId>
+    <artifactId>java-telegram-bot-calendar</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
+In your bot:
+```java
+import io.github.dostonhamrakulov.InlineCalendarBuilder;
+import io.github.dostonhamrakulov.InlineCalendarCommandUtil;
+
+...
+        
+InlineCalendarBuilder inlineCalendarBuilder = new InlineCalendarBuilder();
+
+SendMessage sendMessage = new SendMessage();
+sendMessage.setReplyMarkup(inlineCalendarBuilder.build(update));
+...
+
+// you can check if calendar/date picker is clicked        
+if (InlineCalendarCommandUtil.isInlineCalendarClicked(update)){
+    // if ignorable buttons are clicked like empty cells, cells for week days, etc.
+    if (InlineCalendarCommandUtil.isCalendarIgnoreButtonClicked(update)) {
+        return;
+    }
+
+    // return to the next or previous months
+    if (InlineCalendarCommandUtil.isCalendarNavigationButtonClicked(update)) {
+        sendMessage.setReplyMarkup(inlineCalendarBuilder.build(update));
+        // execute
+        return;
+    }
+
+    LocalDate localDate = InlineCalendarCommandUtil.extractDate(update);
+}
+```
 
 # How to contribute
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
