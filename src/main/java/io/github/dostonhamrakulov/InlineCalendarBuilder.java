@@ -1,5 +1,6 @@
 package io.github.dostonhamrakulov;
 
+import com.neovisionaries.i18n.LanguageCode;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -27,6 +28,7 @@ public class InlineCalendarBuilder {
      * Translated month names
      */
     private Map<Month, String> months;
+    private final LanguageCode languageCode;
 
     /**
      * Flag to show the full month name
@@ -34,20 +36,11 @@ public class InlineCalendarBuilder {
     private boolean showFullMonthName;
 
     public InlineCalendarBuilder() {
-        this.weekDays = new String[]{"D", "S", "CH", "P", "J", "SH", "Y"};
-        this.months = new HashMap<>();
-        this.months.put(Month.JANUARY, "Yanvar");
-        this.months.put(Month.FEBRUARY, "Fevral");
-        this.months.put(Month.MARCH, "Mart");
-        this.months.put(Month.APRIL, "April");
-        this.months.put(Month.MAY, "May");
-        this.months.put(Month.JUNE, "Iyun");
-        this.months.put(Month.JULY, "Iyul");
-        this.months.put(Month.AUGUST, "Avgust");
-        this.months.put(Month.SEPTEMBER, "Sentyabr");
-        this.months.put(Month.OCTOBER, "Oktyabr");
-        this.months.put(Month.NOVEMBER, "Noyabr");
-        this.months.put(Month.DECEMBER, "Dekabr");
+        this.languageCode = LanguageCode.uz;
+    }
+
+    public InlineCalendarBuilder(LanguageCode languageCode) {
+        this.languageCode = languageCode;
         this.showFullMonthName = false;
     }
 
@@ -128,9 +121,9 @@ public class InlineCalendarBuilder {
         in = new InlineKeyboardButton();
 
         if (showFullMonthName) {
-            in.setText(this.months.get(dateForCalendar.getMonth()) + ", " + dateForCalendar.getYear());
+            in.setText(this.getMonths().get(dateForCalendar.getMonth()) + ", " + dateForCalendar.getYear());
         } else {
-            in.setText(this.months.get(dateForCalendar.getMonth()).substring(0, 3) + ", " + dateForCalendar.getYear());
+            in.setText(this.getMonths().get(dateForCalendar.getMonth()).substring(0, 3) + ", " + dateForCalendar.getYear());
         }
 
         in.setCallbackData(InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX + InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE + dateForCalendar.getMonth().name());
@@ -147,19 +140,19 @@ public class InlineCalendarBuilder {
     }
 
     public String[] getWeekDays() {
-        return weekDays;
-    }
+        if (LanguageCode.uz == this.languageCode) {
+            return TranslationUZ.weekDays;
+        }
 
-    public void setWeekDays(final String[] weekDays) {
-        this.weekDays = weekDays;
+        return new String[]{};
     }
 
     public Map<Month, String> getMonths() {
-        return months;
-    }
+        if (LanguageCode.uz == this.languageCode) {
+            return TranslationUZ.getMonths();
+        }
 
-    public void setMonths(final Map<Month, String> months) {
-        this.months = months;
+        return new HashMap<>();
     }
 
     public void setShowFullMonthName(boolean showFullMonthName) {
