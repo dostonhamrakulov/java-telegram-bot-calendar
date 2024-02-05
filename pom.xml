@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.dostonhamrakulov</groupId>
   <artifactId>java-telegram-bot-calendar</artifactId>
   <packaging>jar</packaging>
-  <version>2.0-SNAPSHOT</version>
+  <version>2.0</version>
   <name>java-telegram-bot-calendar Maven Webapp</name>
   <description>Calendar for Telegram Bot in Java that you can use in your java based telegram bots</description>
   <url>https://dosha.uz/</url>
@@ -28,6 +27,7 @@
     <connection>scm:git:git://github.com/dostonhamrakulov/java-telegram-bot-calendar.git</connection>
     <developerConnection>scm:git:ssh://github.com:dostonhamrakulov/java-telegram-bot-calendar.git</developerConnection>
     <url>https://github.com/dostonhamrakulov/java-telegram-bot-calendar/tree/master</url>
+    <tag>java-telegram-bot-calendar-2.0</tag>
   </scm>
 
   <distributionManagement>
