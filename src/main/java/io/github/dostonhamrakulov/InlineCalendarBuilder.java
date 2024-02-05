@@ -1,6 +1,5 @@
 package io.github.dostonhamrakulov;
 
-import com.neovisionaries.i18n.LanguageCode;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -29,7 +28,7 @@ public class InlineCalendarBuilder {
      * Translated month names
      */
     private Map<Month, String> months;
-    private final LanguageCode languageCode;
+    private final LanguageEnum languageCode;
 
     /**
      * Flag to show the full month name
@@ -37,10 +36,10 @@ public class InlineCalendarBuilder {
     private boolean showFullMonthName;
 
     public InlineCalendarBuilder() {
-        this.languageCode = LanguageCode.uz;
+        this.languageCode = LanguageEnum.UZ;
     }
 
-    public InlineCalendarBuilder(LanguageCode languageCode) {
+    public InlineCalendarBuilder(LanguageEnum languageCode) {
         this.languageCode = languageCode;
         this.showFullMonthName = false;
     }
@@ -141,19 +140,19 @@ public class InlineCalendarBuilder {
     }
 
     public String[] getWeekDays() {
-        if (LanguageCode.uz == this.languageCode) {
+        if (LanguageEnum.UZ == this.languageCode) {
             return TranslationUZ.weekDays;
         }
 
-        if (LanguageCode.ru == this.languageCode) {
+        if (LanguageEnum.RU == this.languageCode) {
             return TranslationRU.weekDays;
         }
 
-        if (LanguageCode.en == this.languageCode) {
+        if (LanguageEnum.EN == this.languageCode) {
             return TranslationEN.weekDays;
         }
 
-        if (LanguageCode.de == this.languageCode) {
+        if (LanguageEnum.DE == this.languageCode) {
             return TranslationDE.weekDays;
         }
 
@@ -161,19 +160,19 @@ public class InlineCalendarBuilder {
     }
 
     public Map<Month, String> getMonths() {
-        if (LanguageCode.uz == this.languageCode) {
+        if (LanguageEnum.UZ == this.languageCode) {
             return TranslationUZ.getMonths();
         }
 
-        if (LanguageCode.ru == this.languageCode) {
+        if (LanguageEnum.RU == this.languageCode) {
             return TranslationRU.getMonths();
         }
 
-        if (LanguageCode.en == this.languageCode) {
+        if (LanguageEnum.EN == this.languageCode) {
             return TranslationEN.getMonths();
         }
 
-        if (LanguageCode.de == this.languageCode) {
+        if (LanguageEnum.DE == this.languageCode) {
             return TranslationDE.getMonths();
         }
 
