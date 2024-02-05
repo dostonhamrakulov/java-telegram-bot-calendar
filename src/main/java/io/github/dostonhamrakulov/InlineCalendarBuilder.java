@@ -148,6 +148,10 @@ public class InlineCalendarBuilder {
             return TranslationRU.weekDays;
         }
 
+        if (LanguageCode.en == this.languageCode) {
+            return TranslationEN.weekDays;
+        }
+
         return new String[]{};
     }
 
@@ -158,6 +162,10 @@ public class InlineCalendarBuilder {
 
         if (LanguageCode.ru == this.languageCode) {
             return TranslationRU.getMonths();
+        }
+
+        if (LanguageCode.en == this.languageCode) {
+            return TranslationEN.getMonths();
         }
 
         return new HashMap<>();

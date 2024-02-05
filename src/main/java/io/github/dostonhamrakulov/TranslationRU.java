@@ -6,8 +6,15 @@ import java.util.Map;
 
 public class TranslationRU {
 
+    /**
+     * First letters of week days
+     */
     public static final String[] weekDays = new String[]{"П", "В", "С", "Ч", "П", "С", "В"};
 
+    /**
+     * Months for Russian language
+     * @return
+     */
     public static Map<Month, String> getMonths() {
         final Map<Month, String> months = new HashMap<>();
         months.put(Month.JANUARY, "Январь");
