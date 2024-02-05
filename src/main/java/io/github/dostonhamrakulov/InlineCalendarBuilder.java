@@ -15,6 +15,7 @@ import java.util.Map;
 
 /**
  * Inline calendar builder
+ *
  * @author Doston Hamrakulov
  */
 public class InlineCalendarBuilder {
@@ -58,7 +59,7 @@ public class InlineCalendarBuilder {
         List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
 
         // adding weeks in one row
-        for (final String weekDay: getWeekDays()) {
+        for (final String weekDay : getWeekDays()) {
             final InlineKeyboardButton in = new InlineKeyboardButton();
             in.setText(weekDay);
             in.setCallbackData(InlineCalendarCommandUtil.CALENDAR_COMMAND_PREFIX + InlineCalendarCommandUtil.CALENDAR_COMMAND_IGNORE);
@@ -152,7 +153,11 @@ public class InlineCalendarBuilder {
             return TranslationEN.weekDays;
         }
 
-        return new String[]{};
+        if (LanguageCode.de == this.languageCode) {
+            return TranslationDE.weekDays;
+        }
+
+        return new String[] { };
     }
 
     public Map<Month, String> getMonths() {
@@ -166,6 +171,10 @@ public class InlineCalendarBuilder {
 
         if (LanguageCode.en == this.languageCode) {
             return TranslationEN.getMonths();
+        }
+
+        if (LanguageCode.de == this.languageCode) {
+            return TranslationDE.getMonths();
         }
 
         return new HashMap<>();
