@@ -144,12 +144,20 @@ public class InlineCalendarBuilder {
             return TranslationUZ.weekDays;
         }
 
+        if (LanguageCode.ru == this.languageCode) {
+            return TranslationRU.weekDays;
+        }
+
         return new String[]{};
     }
 
     public Map<Month, String> getMonths() {
         if (LanguageCode.uz == this.languageCode) {
             return TranslationUZ.getMonths();
+        }
+
+        if (LanguageCode.ru == this.languageCode) {
+            return TranslationRU.getMonths();
         }
 
         return new HashMap<>();
