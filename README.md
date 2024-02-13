@@ -6,7 +6,7 @@ Maven Dependency:
 <dependency>
     <groupId>io.github.dostonhamrakulov</groupId>
     <artifactId>java-telegram-bot-calendar</artifactId>
-    <version>1.0</version>
+    <version>2.3</version>
 </dependency>
 ```
 
