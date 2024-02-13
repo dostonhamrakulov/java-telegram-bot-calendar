@@ -17,7 +17,10 @@ import io.github.dostonhamrakulov.InlineCalendarCommandUtil;
 
 ...
         
-InlineCalendarBuilder inlineCalendarBuilder = new InlineCalendarBuilder();
+InlineCalendarBuilder inlineCalendarBuilder = new InlineCalendarBuilder(LanguageEnum.DE);
+
+// enable showing full month name
+inlineCalendarBuilder.setShowFullMonthName(true);
 
 SendMessage sendMessage = new SendMessage();
 sendMessage.setReplyMarkup(inlineCalendarBuilder.build(update));
