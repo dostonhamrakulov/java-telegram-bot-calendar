@@ -10,6 +10,13 @@ Maven Dependency:
 </dependency>
 ```
 
+### Screens:
+
+<p align="center">
+	<img width="250px" height="450px" src="https://github.com/dostonhamrakulov/java-telegram-bot-calendar/tree/master/screenshots/screenshot_1.png" />
+	<img width="250px" height="450px" src="https://github.com/dostonhamrakulov/java-telegram-bot-calendar/tree/master/screenshots/screenshot_2.png" />
+</p>
+
 In your bot:
 ```java
 import io.github.dostonhamrakulov.InlineCalendarBuilder;
